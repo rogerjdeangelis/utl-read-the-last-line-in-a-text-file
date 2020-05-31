@@ -4,8 +4,12 @@ Read the last line in a text file
                                                                                                                           
       Method                                                                                                              
         1. Use powershell to get the number of lines in the file                                                          
-        2. Use sas input modifier #<lines> to read last line                                                              
-                                                                                                                          
+        2. Use sas input modifier #<lines> to read last line 
+        
+      Additiona solution(pure SAS) on end by    
+      Nat Wooding            
+      nathani@verizon.net    
+                                                                                                                      
     github                                                                                                                
     https://tinyurl.com/ycvobajl                                                                                          
     https://github.com/rogerjdeangelis/utl-read-the-last-line-in-a-text-file                                              
@@ -170,5 +174,38 @@ Read the last line in a text file
                                                                                                                           
     systask kill _ps1;                                                                                                    
     systask command "&cmd" taskname=_ps1;                                                                                 
-    waitfor _ps1;                                                                                                         
+    waitfor _ps1;      
+    
+        *_   _       _                                          
+    | \ | | __ _| |_                                        
+    |  \| |/ _` | __|                                       
+    | |\  | (_| | |_                                        
+    |_| \_|\__,_|\__|                                       
+                                                            
+    ;                                                       
+                                                            
+    Here's one alternative. Of course,                      
+    you could put a variable name in the input statement.   
+                                                            
+    Nat Wooding                                             
+                                                            
+                                                            
+    data _null_;                                            
+                                                            
+      file "c:/park/back.txt";                              
+                                                            
+      do rec=1 to 10000;                                    
+        strng=cats("A",rec)!!' ROGER';                      
+        put strng;                                          
+      end;                                                  
+                                                            
+    run;                                                    
+                                                            
+    Data want;                                              
+    infile "c:/park/back.txt" end = eof;                    
+    input;                                                  
+    if eof;                                                 
+    Text = _infile_;                                        
+    run;;                                                   
+
                                                                                                                           
